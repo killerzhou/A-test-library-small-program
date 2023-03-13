@@ -1,0 +1,509 @@
+#include <stdio.h> 
+#include <string.h>
+#include <windows.h> 
+#include <math.h> 
+char   name[100]; 
+char   addname[100];//定义全局变量以在全局中保存用户名 
+int add;
+enum Option			///给不同的题目定义枚举常量
+{
+	EXIT, 
+	zc,
+	qh,
+	hws,
+	ws,
+	bqbj,
+	sxhs,
+	wqpfs,
+	gyshgbs,
+	Fibonacci,
+	ss,
+	sz,
+	zfc,
+	
+};
+char* zwh1()         
+{
+	int pass;  //定义密码变量
+	begin:     //重回开始界面
+	printf("******************\n");
+	printf("**C语言题库系统 **\n");
+	printf("******************\n");
+	printf("******************\n");
+	printf("**--------------**\n");
+	printf("**请输入账户密码**\n");
+	printf("**user name:    **\n");
+	printf("**password:     **\n");
+	printf("**--------------**\n");
+	printf("**回车以确认输入**\n");
+	printf("******************\n\n\n");
+	printf("说明:登录管理员账户以注册新用户\n");
+	printf("user name:");
+	scanf("%s",&name);    //输入用户名
+	printf("password:");
+	scanf("%d",&pass);    //输入密码
+	if(pass==123456||pass==add){
+		printf("正在进入系统......\n");
+		return name;     //返回用户输入的用户名
+	} 
+	else if(pass==654321){
+		printf("正在进入管理员系统......\n");
+		add=zwh5();               //进入注册模块
+		system("color 7");       //更换回字体颜色，返回主系统
+		goto begin;              
+	}
+	else{
+		printf("error:请重新输入\n");
+		goto begin; 
+	}
+}
+
+void zwh2(){	 //输入不同的数字进入不同模块 
+	zwh3();				//选择菜单界面函数
+	chose:
+	printf("[请选择:>");		 //提示选择数字
+	int z=0;
+	scanf("%d",&z);				 //输入选择的数字
+	switch (z)
+	{
+		case zc: z1wh(); break;
+		case qh: z2wh(); break;
+		case hws: z3wh(); break;
+		case ws: z4wh(); break;
+		case bqbj: z5wh(); break;
+		case sxhs: z6wh(); break;
+		case wqpfs: z7wh(); break;
+		case gyshgbs: z8wh(); break;
+		case Fibonacci: z9wh(); break;
+		case ss: z10wh(); break;
+		case sz: z11wh(); break;
+		case zfc: z12wh(); break;
+		case EXIT: printf("成功退出系统!\n"); break;		//退出语句
+		default: printf("输入错误，请重新选择\n");goto chose;		//goto循环
+		}	
+	} 
+int zwh3(void)          //选择菜单界面函数
+{
+	printf("*********************\n");
+	printf("**     题目目录    **\n");
+	printf("**-----------------**\n");
+	printf("**   1.整除问题    **\n");
+	printf("**   2.求和问题    **\n");
+	printf("**   3.回文数问题  **\n");
+	printf("**   4.完数问题    **\n");
+	printf("**   5.百钱百鸡    **\n");
+	printf("**   6.水仙花数    **\n");
+	printf("**   7.完全平方数  **\n");
+	printf("**   8.公约数公倍数**\n");
+	printf("**   9.Fibonacci   **\n");
+	printf("**   10.素数问题   **\n");
+	printf("**   11.数组问题   **\n");
+	printf("**   12.字符串问题 **\n");
+	printf("**   0.EXIT        **\n");
+	printf("*********************\n");
+}
+//使用户知道数字对应的题目
+
+void zwh4(){         //利用getch()函数读取控制台使得一键返回 
+	printf("\n");
+	printf("按数字0以返回\n");
+	while(1){  
+		int input =_getch();   //变量input
+		if(input=='0'){
+			system("cls");     //进入界面前清屏
+			break;	
+		}
+	}
+	zwh2();                  //退出循环后重新进入选择界面
+}
+
+int zwh5(){        //注册系统模块 
+	int add1;      //首次输入密码变量
+	int add2;	    //再次输入密码变量
+	system("cls");   //进入模块前清屏
+	system("color 2");  //更换字体颜色提示用户进入后台
+	printf("Welcome!");
+	printf("\n");
+	printf("admin\n");   
+	printf("******************\n");
+	printf("**新用户注册系统**\n");
+	printf("******************\n");
+	printf("******************\n");
+	printf("**--------------**\n");
+	printf("**请输入账户密码**\n");
+	printf("**user name:    **\n");
+	printf("**password:     **\n");
+	printf("**--------------**\n");
+	printf("**回车以确认输入**\n");
+	printf("******************\n\n\n");
+	printf("new user name:");
+	scanf("%s",&addname);
+back:
+	printf("new password:");
+	scanf("%d",&add1);
+	printf("new password again:");
+	scanf("%d",&add2);
+	if(add1!=add2){   
+		printf("两次输入密码不一致，请重新输入\n");      //使用户确认密码 
+		goto back;							//goto使得不再重复输入新用户名 
+	}
+	else{
+		system("cls");       //清屏函数 
+		return add1;
+	}	
+}
+
+int z1wh(){
+	printf("整除问题\n");
+	printf("功能说明:统计[521,8421]之间有多少个这样的整数,其各位数字之和能被7整除。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int n=0;     //统计共有多少整数 
+	int i;		//遍历521-8421整数的变量 
+	for(i=521;i<=8421;i++){
+		int a=i;
+		int sum=0;
+		while(a){
+			int b=a%10;
+			sum+=b;
+			a/=10;
+		}
+		if(sum%7==0){
+			n++;
+		}
+	}
+	printf("结果为  共有%d个\n",n);
+	zwh4();
+}
+int z2wh(){
+	printf("求和问题\n");
+	printf("功能说明:当n=100时，计算S=(1-1/2)+(1/3-1/4)+……+(1/(2n-1)-1/(2n))的值，保留三位小数。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	float sum=0;         //求和变量 
+	int i;				
+	for(i=1;i<=199;i+=2){
+		sum+=(1.0/i)-(1.0/(i+1));
+	}
+	printf("结果为  %.3f\n",sum);
+	zwh4();
+}	
+int z3wh(){
+	printf("回文数问题\n");
+	printf("功能说明：编写程序，计算在[0，60]的范围内有多少个数，其每位数的乘积大于每位数的和。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int n,i,k,l;   //其他变量 
+	int sum=0;    //求和变量 
+	for(i=0;i<=60;i++){
+		if(i<10){
+			k=i;
+			l=1;
+			sum=k;
+		}
+		else{
+			k=i%10;
+			l=i/10;
+			sum=k+l;
+		}
+		if(k*l>sum){
+			n++;
+		}
+	}
+	printf("结果为  %d\n",n);
+	zwh4();
+}
+int z4wh(){
+	printf("完数问题\n");
+	printf("功能说明：若正整数N的所有因子之和等于N的倍数，则称N为红玫瑰数。如28的因子之和为1＋2＋4＋7＋14＋28＝56＝28*2，故28是红玫瑰数。求[1，700]之间红玫瑰数的个数。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int i,a;
+	int n=0;     //总共的红玫瑰数 
+	for(i=1;i<=700;i++){
+		int sum=0;   //因子之和 
+		for(a=1;a<=i;a++){
+			if(i%a==0){
+				sum+=a;
+			} 
+		}
+		if(sum%i==0){
+			n++;
+		}
+	}
+	printf("结果为  %d\n",n);
+	zwh4();
+}
+int z5wh(){
+	printf("百钱百鸡问题\n");
+	printf("功能说明：有60个学生一起买小吃，共花钱100元，其中每个大学生花3元，每个中学生花2元，每个小学生花1元，问大、中、小学生的人数分配共有多少种不同的解（去掉某类学生为0的）?\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int a,b,c;   //a,b,c变量分别表示大学生、中学生、小学生的数量 
+	int n=0;
+	for(a=1;a<32;a++){
+		for(b=1;b<50;b++){
+			for(c=1;c<100;c++){
+				if(a+b+c==60&&3*a+2*b+1*c==100)
+				n++;
+			}
+		}
+	}
+	printf("结果为  %d\n",n);
+	zwh4();
+}
+int z6wh(){
+	printf("水仙花数问题\n");
+	printf("功能说明：编写程序，计算在[0，60]的范围内有多少个数，其每位数的乘积大于每位数的和.\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int i,a,b;
+	int n=0;
+	for(i=0;i<61;i++){
+		if(i>9){
+			a=i%10;
+			b=i/10;
+			int num=a*b;
+			int sum=a+b;
+			if(num>sum){
+				n++;
+			}
+		}
+	}
+	printf("结果为  %d\n",n);
+	zwh4();
+}
+int z7wh(){
+	printf("完全平方数问题\n");
+	printf("功能说明：已知A<B, A和B均为正整数，且A*B=716699，求A+B的最小值。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+  	int a=0,b,i,n,m;
+    m=716699;
+    n=(int)sqrt(m);
+    i=2;
+     while(a<n)
+     {
+        i++;
+        a=n-i;
+        if(m%a==0) break;
+     }
+	printf("结果为 %d\n",a+m/a);
+	zwh4();
+}
+int z8wh(){
+	printf("公约数和公倍数问题\n");
+	printf("功能说明：求当N=20时，1/(1*2)+1/(2*3)+1/(3*4)+…+1/(N*(N+1))的值。\n要求：按四舍五入的方式精确到小数点后第二位。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	float n,sum=0; 
+	for(n=1.0;n<=20;n++){
+		sum=(1.0/(n*(n+1)))+sum;
+	}
+	printf("结果为 %.2f\n",sum);
+	zwh4();
+}
+int z9wh(){
+	printf("Fibonacci问题\n");
+	printf("功能说明：已知Fibonacci数列：1,1,2,3,5,8,……,它可由下面公式表述：F(1)=1 ，F(2)=1，F(n)=F(n-1)+F(n-2)（n>2），试求F(2)+F(4)+F(6)+……+F(50)值。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+    int i;
+    double  a=1,b=1,s,sum=1;
+    for(i=3;i<51;i++)
+    {
+	s=a+b;
+	a=b;
+    b=s;
+	if(i%2==0)
+    	sum=sum+s;
+    }
+	printf("结果为  %lf\n",sum);
+	zwh4();
+}
+int z10wh(){
+	printf("素数问题\n");
+	printf("功能说明：两个素数之差为2，则称这两个素数为双胞胎数。求出[200，1000]之间的最大一对双胞胎数的和。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	int fun(int a )
+  { 
+  	int i;
+    for(i=2;i<=a/2;i++)
+    if(a%i==0) return 0;
+    return 1;
+  }
+  	int i,a;
+    for(i=200;i<999;i++)
+    if(fun(i)&&fun(i+2))
+    a=i;
+    printf("结果为  %d\n",2*a+2);
+    zwh4();
+ }
+int z11wh(){
+	printf("数组问题\n");
+	printf("功能说明：输入一正整数n(0<n≤9)和一组(n个)的有序整数，再输入一个整数x，把x插入到这组数据中，使该组数据仍然有序。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	printf("请输入：\n");
+    int n,x,b,i;
+    scanf("%d",&n);
+    int a[n+1];
+     for(i=0;i<n;i++)
+        scanf("%d",&a[i]);
+    scanf("%d",&x);
+    for(i=0;i<n;i++)
+        if(x<a[i])
+        {
+            b=i;
+            break;
+        }
+    for(i=n;i>=b;i--)
+        a[i]=a[i-1];
+    a[b]=x;
+    for(i=0;i<n+1;i++)
+        printf("%d,",a[i]);
+    zwh4();
+}
+int z12wh(){
+	printf("字符串问题\n");
+	printf("功能说明：输入一个字符串，分别统计字符串中英文字母、数字和其他字符出现的次数。\n");
+	printf("按1以确认进入 按0以返回\n");
+	while(1){  
+		int input = _getch();
+		if(input=='0'){
+			system("cls");
+			zwh2();
+		}
+		if(input=='1'){
+			break;
+		}
+	}
+	char ch;
+    int n1=0,n2=0,n3=0,n4=0;
+    printf("请输入一个字符串以#结束:\n");
+    while((ch=getchar())!='#')
+  {
+	    if((ch>='a'&&ch<='z')||(ch>='A'&&ch<='Z'))
+			n1++;
+		else if(ch==' ')
+			n2++;
+		else if(ch>='0'&&ch<='9')
+			n3++;
+		else
+			n4++; 
+  }
+	printf("结果为:\n");
+    printf("英文字母出现的次数是%d\n空格出现的次数是%d\n数字出现的次数是%d\n其他字符出现的次数是%d\n",n1,n2,n3,n4);
+    zwh4();
+}
+int main()
+{	
+	char user[100];
+    strcpy(user,zwh1());   //将返回的用户名保存 
+	system("cls");    //清屏以进入下一步 
+	printf("Welcome!");
+	printf("\n");
+	printf("%s\n",user);  
+	zwh2();     
+	return 0;
+}
